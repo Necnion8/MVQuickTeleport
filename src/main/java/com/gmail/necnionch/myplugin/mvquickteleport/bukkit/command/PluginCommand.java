@@ -39,7 +39,7 @@ public class PluginCommand implements TabExecutor {
         if (worldName != null && mgr.getUnloadedWorlds().contains(worldName)) {
             if (!sender.hasPermission("multiverse.core.load")) {
                 sender.sendMessage(ChatColor.RED + "ワールドをロードする権限がありません");
-                return false;
+                return true;
             }
             plugin.loadWorld(worldName);
             Command.broadcastCommandMessage(sender, "Loaded world '" + worldName + "'!");
