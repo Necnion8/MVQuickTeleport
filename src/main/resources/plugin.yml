@@ -1,0 +1,17 @@
+name: MVQuickTeleport
+version: '${version}'
+main: com.gmail.necnionch.myplugin.mvquickteleport.bukkit.MVQuickTeleportPlugin
+api-version: 1.13
+authors: [ Necnion8 ]
+
+depends: [ Multiverse-Core ]
+softdepend: [ Multiverse-Portals ]
+
+commands:
+  mvquickteleport:
+    aliases: [ qmvtp ]
+    permission: mvquickteleport.command.mvquickteleport
+
+permissions:
+  mvquickteleport.command.mvquickteleport:
+    default: op
