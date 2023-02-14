@@ -15,3 +15,12 @@
 > 
 > 引数: `/qmvtp (world)`<br>
 > 権限: `mvquickteleport.command.mvquickteleport` (default: OP)<br>
+
+## 設定
+```yml
+# ワールドが作成された時に、autoload 設定を無効にします
+force-autoload-disable: true
+
+# 接続時に前回切断したワールドを再ロードして位置を復元します (アンロードされていた場合のみ)
+keep-quit-world: true
+```
