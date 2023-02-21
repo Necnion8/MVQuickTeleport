@@ -4,14 +4,18 @@ import com.gmail.necnionch.myplugin.mvquickteleport.bukkit.MVQuickTeleportPlugin
 import com.gmail.necnionch.myplugin.mvquickteleport.bukkit.PlayerLocation;
 import com.onarandombox.MultiverseCore.api.MultiverseWorld;
 import org.bukkit.Location;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.event.server.TabCompleteEvent;
 import org.bukkit.event.world.WorldInitEvent;
 
+import java.util.Locale;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 public class PluginListener implements Listener {
 
@@ -74,6 +78,28 @@ public class PluginListener implements Listener {
 
         Location fallback = lastLocation.toLocation(mvWorld.getCBWorld());
         player.teleport(fallback);
+    }
+
+    @EventHandler(ignoreCancelled = true)
+    public void onTabComplete(TabCompleteEvent event) {
+        String raw = event.getBuffer();
+        int len;
+        if (raw.startsWith("/mvtp ")) {
+            len = 2;
+        } else if (raw.startsWith("/mv tp ")) {
+            len = 3;
+        } else {
+            return;
+        }
+
+        String[] split = raw.split(" ", -1);
+        if (split.length == len) {
+            event.getCompletions().addAll(plugin.getWorldManager().getMVWorlds().stream()
+                    .map(MultiverseWorld::getName)
+                    .filter(name -> event.getSender().hasPermission("multiverse.teleport." + name.toLowerCase(Locale.ROOT)))
+                    .filter(s -> s.toLowerCase(Locale.ROOT).startsWith(split[len-1].toLowerCase(Locale.ROOT)))
+                    .collect(Collectors.toList()));
+        }
     }
 
 }
